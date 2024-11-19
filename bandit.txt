@@ -1,0 +1,103 @@
+bandit0 - NH2SXQwcBdpmTEzi3bvBHMM9H66vVXjL
+ls > more readme
+
+bandit1 - rRGizSaX8Mk1RTb1CNQoXTcYZWU6lgzi
+ls > more – 
+
+bandit2 - aBZ0W5EmUfAf7kHTQeOwd8bauFJ2lAiG
+ls > more spaces [tab to autofill]
+
+bandit3 -2EW7BBsr6aMMoJ2HjW067dm8EgX26xNe
+cd inhere > ls -a to reveal hidden files since its empty
+
+bandit4 - lrIWWI6bB37kxfiCQZqUdOIYfr6eEeqR
+file to determine file type > file 7 is ascii > cat ./–file07
+
+bandit5 - P4L4vucdmLnm8I7Vl7jG1ApGSfjYKqJU
+tried file, too many options > man find > used find -type f -size 1033c to locate file w specified bytes
+
+bandit6 - z7WtoNQU2XfjmMtWA8u5rN4vzqu4v99S
+on server, so cd / > find ./ to find on server, > find ./ -user bandit7 -group bandit6 -size 33c >  > cat ./var/lib/dpkg/info/bandit7/password
+
+bandit7 - TESKZC0XvTetK0S9xNwm25STk5iWrBvP
+cat data.txt > grep -w “millionth” data.txt 
+
+bandit8 - EN632PlfYiZbn3PhVK3XOGSlNInNE00t 
+uniq only on adjacent duplicates > sort data.txt | uniq -u
+
+bandit9 - G7w8LIi6J3kTb8A7j9LgrywtEUlyyp6s
+strings data.txt | grep -w “==”
+
+bandit10 - 6zPeziLdR2RKNdNYFNb6nVCKzphlXHBM
+man base64, -d to decode > base64 -d data.txt
+
+bandit11 - JVNBBFSmZwKKOP0XbFXOoW8chDz5yVRv
+rot13 on a-z is n-z a-m, and on A-Z is N-Z A-M, use translate > cat data.txt | tr '[A-Z a-z]' '[N-ZA-M n-za-m]'
+
+bandit 12 - wbWdlBxEir4CaE8LaPhauuOo6pwRmrDw
+hexdump repeatedly compressed, first reverse hexdump, decompress and rename files with appropriate file type suffix
+
+bandit13 - fGrHPx402xGC7U7rXKDaxiWFTOiF0ENq
+ssh bandit14@localhost (user@machine) failed due to public key > ssh -i sshkey.private bandit14@localhost errors out > ssh -i sshkey.private bandit14@localhost -p 2220 > cd /etc/banditpass > cat bandit14
+
+bandit14 - jN2kgmIXJ6fShzhT2avhotn4Zcka6tnt
+ssh bandit15@localhost -p 30000 failed > man listed commands > nc for talking to servers > nc localhost 30000, pasted previous pass
+
+bandit15 - JQttfApK4SeyHwDlI9SXGR50qclOAil1
+man openssl, , openssl s_client -connect localhost:30001 > pasted prev pass
+
+bandit16 - VwOSWtCA7lRKkTfbr2IDh6awj9RNZM5e
+man nmap example: A representative Nmap scan ## nmap -A -T4 scanme.nmap.org > nmap -A -T4 -p31000-32000 localhost > 31518 and 31790 are ssl > private ssh key > in /tmp, vim 17 and paste key > ssh -i /tmp/17/private.key bandit17@localhost -p 2220 gave error “Permissions 0664 for '/tmp/17/private.key' are too open. It is required that your private key files are NOT accessible by others. This private key will be ignored.” > read on permission bits > chmod 700 /tmp/17/private.key > all passes are in /etc/bandit_pass like in bandit13, cd /etc/bandit_pass, cat bandit17
+
+bandit17 - hga5tuuCLF6fFzUpnagiMN8ssu9LFrdg
+diff passwords.new passwords.old
+
+bandit18 - awhqfNnAbc1naukrpqDYcF95h7HoMTrC
+logged out on bash shell, change terminal env? > man ssh > ssh bandit18@bandit.labs.overthewire.org -p 2220 -T > ls > cat readme
+
+bandit19 - VxCazJaVykI6W36BkBU0mJTCM8rR95XT
+setuid didnt work since setup wasnt there, file bandit20-do = setuid executable, used it like a command > ./bandit20-do cat /etc/bandit_pass/bandit20
+
+bandit20 - NvEJF7oVjkddltPSrdKEFOllh9V1IBcq
+set up two terminals like suggested, used prev command nc -l 30001 to send the password and listen for returning pass > ./suconnect 30001 on other port
+
+bandit21 - WdDozAdTM2z9DiFEQ2mGlwngMfj4EZff
+cd /etc/cron.d/ > cat cronjob_bandit22 > /usr/bin/cronjob_bandit22.sh script > cat the script > chmod of a file /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv > cat this and it reveals a pass
+
+bandit22 - QYw0Y2aiA672PsMmh9puTQuhoz8SyR2G
+cat /usr/bin/cronjob_bandit23.sh > script says mytarget = I am user $myname | md5sum | cut -d ' ' -f 1 > replacing my name with bandit23 yields 8ca319486bfbbc3663ea0fbe81326349 > script copies pass to /tmp/mytarget so cat /tmp/8ca319486bfbbc3663ea0fbe81326349 reveals pass
+
+bandit23 - VAfGXJ1PBSsPSnvsjI8p759leLZ9GGar
+cat /usr/bin/cronjob_bandit24.sh > script cds into /var/spool/bandit24/foo and executes all scripts, need to create a script here to read bandit24 pass and copy it to tmp 
+#!/bin/bash
+cat /etc/bandit_pass/bandit24 > /tmp/24pass/pw
+did not execute, made script available to all via chmod 777 script.sh, also did not work, chmod 777 to make tmp/24pass directory available for bandit24 to write, cat /tmp/24pass/pw and saw pass!
+
+bandit24 - p7TaowMYrmu23Ol8hiZh9UvD0O9hpx8d
+writing a script to loop through 0000 to 9999 and try each one with nc localhost 30002
+ < inspiration from looking up how to write bash loop
+loop.sh:
+#!/bin/bash
+for i in {0000..9999}
+do
+        echo "VAfGXJ1PBSsPSnvsjI8p759leLZ9GGar $i"
+done | nc localhost 30002
+bash loop.sh, eventually reveals pass after trying all combos.
+
+bandit25 - c7GvcKlw9mC7aUQaPx7nwFstuAIBw1o1
+cd /etc/shells shows valid login shells
+/bin/sh
+/bin/bash
+/usr/bin/bash
+/bin/rbash
+/usr/bin/rbash
+/usr/bin/sh
+/bin/dash
+/usr/bin/dash
+/usr/bin/tmux
+/usr/bin/screen
+/usr/bin/showtext
+cat on all gives gibberish except /usr/bin/showtext, which shows that it executes more on the file in bandit26 and then exits > man more >” Interactive commands for more are based on vi(1)”,  shows a small portion of text > ssh bandit26@localhost -i bandit26.sshkey -p 2220 in the smallest terminal window > v to start editor > https://superuser.com/questions/287994/how-to-specify-shell-for-vim explains how to change the shell to the normal format using set shell=/usr/bin/bash and :shell > cat /etc/bandit_pass/bandit26
+
+bandit26 - YnQpBuifNMas1hcUFk70ZmqkhUU2EuaS
+set shell= /usr/bin/bash > :shell > ls > ./bandit27-do cat /etc/bandit_pass/bandit27 reveals pass.
